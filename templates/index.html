@@ -76,28 +76,28 @@
         <button type="submit">Add</button>
     </form>
 
-    <ul>
-        {% for task in tasks %}
-        <li class="{% if task[2] %}completed{% endif %}">
-            
-            <span>{{ task[1] }}</span>
+   <ul>
+{% for task in tasks %}
+<li class="{% if task[2] %}completed{% endif %}">
 
-            <div>
-                <!-- Toggle complete -->
-                <a href="/complete/{{ task[0] }}">
-                    {% if task[2] %}↩️{% else %}✔️{% endif %}
-                </a>
+    <span>{{ task[1] }}</span>
 
-                <!-- Edit -->
-                <a href="/edit/{{ task[0] }}">✏️</a>
+    <div>
+        <!-- Toggle complete -->
+        <a href="/complete/{{ task[0] }}">
+            {% if task[2] %}🔁{% else %}✔️{% endif %}
+        </a>
 
-                <!-- Delete -->
-                <a href="/delete/{{ task[0] }}">❌</a>
-            </div>
+        <!-- Edit -->
+        <a href="/edit/{{ task[0] }}">✏️</a>
 
-        </li>
-        {% endfor %}
-    </ul>
+        <!-- Delete -->
+        <a href="/delete/{{ task[0] }}">❌</a>
+    </div>
+
+</li>
+{% endfor %}
+</ul>
 
 </body>
 </html>

@@ -45,10 +45,39 @@ def delete(id):
 @app.route('/complete/<int:id>')
 def complete(id):
     conn = get_db()
-    conn.execute('UPDATE tasks SET completed = 1 WHERE id = ?', (id,))
+    
+    task = conn.execute('SELECT completed FROM tasks WHERE id = ?', (id,)).fetchone()
+    
+    if task[0] == 0:
+        conn.execute('UPDATE tasks SET completed = 1 WHERE id = ?', (id,))
+    else:
+        conn.execute('UPDATE tasks SET completed = 0 WHERE id = ?', (id,))
+    
     conn.commit()
     conn.close()
+    
     return redirect('/')
+  
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    conn = get_db()
+    task = conn.execute('SELECT * FROM tasks WHERE id = ?', (id,)).fetchone()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    if request.method == 'POST':
+        new_task = request.form.get('task')
+        conn.execute('UPDATE tasks SET content = ? WHERE id = ?', (new_task, id))
+        conn.commit()
+        conn.close()
+        return redirect('/')
+
+    conn.close()
+    return render_template('edit.html', task=task)
+body {
+    font-family: Arial;
+    text-align: center;
+}
+
+button {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
