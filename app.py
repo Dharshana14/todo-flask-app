@@ -72,12 +72,8 @@ def edit(id):
 
     conn.close()
     return render_template('edit.html', task=task)
-body {
-    font-family: Arial;
-    text-align: center;
-}
+import os
 
-button {
-    padding: 5px 10px;
-    border-radius: 5px;
-}
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
